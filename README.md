@@ -1,11 +1,9 @@
 <p align="center">
-  <img src="images/logo.png" alt="Drip Logo" width="128" />
+  <img src="images/logo.png" alt="Drip Logo" width="200" />
 </p>
 
-<p align="center" style="font-size: 44px; font-weight: 600; margin: 0;">Drip</p>
-<p align="center" style="font-size: 20px; font-weight: 500; margin: 8px 0 0;">
-  Your Tunnel, Your Domain, Anywhere
-</p>
+<h1 align="center">Drip</h1>
+<h3 align="center">Your Tunnel, Your Domain, Anywhere</h3>
 
 <p align="center">
   A self-hosted tunneling solution to securely expose your services to the internet.
