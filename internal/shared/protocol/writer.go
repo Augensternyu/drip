@@ -25,7 +25,9 @@ type FrameWriter struct {
 }
 
 func NewFrameWriter(conn io.Writer) *FrameWriter {
-	return NewFrameWriterWithConfig(conn, 128, 2*time.Millisecond, 1024)
+	// Larger queue size for better burst handling across all load scenarios
+	// With adaptive buffer pool, memory pressure is well controlled
+	return NewFrameWriterWithConfig(conn, 128, 2*time.Millisecond, 2048)
 }
 
 func NewFrameWriterWithConfig(conn io.Writer, maxBatch int, maxBatchWait time.Duration, queueSize int) *FrameWriter {
@@ -126,13 +128,12 @@ func (w *FrameWriter) flushBatchLocked() {
 
 	for _, frame := range w.batch {
 		_ = WriteFrame(w.conn, frame)
+		frame.Release()
 	}
 
 	w.batch = w.batch[:0]
 }
 
-// WriteFrame queues a frame to be written by the write loop.
-// Blocks if the queue is full to ensure all writes go through the single write loop.
 func (w *FrameWriter) WriteFrame(frame *Frame) error {
 	w.mu.Lock()
 	if w.closed {
@@ -159,6 +160,11 @@ func (w *FrameWriter) Close() error {
 	w.mu.Unlock()
 
 	close(w.queue)
+
+	for frame := range w.queue {
+		frame.Release()
+	}
+
 	close(w.done)
 
 	return nil
@@ -170,7 +176,6 @@ func (w *FrameWriter) Flush() {
 	w.flushBatchLocked()
 }
 
-// EnableHeartbeat enables automatic heartbeat sending in the write loop.
 func (w *FrameWriter) EnableHeartbeat(interval time.Duration, callback func() *Frame) {
 	w.mu.Lock()
 	w.heartbeatInterval = interval
@@ -181,11 +186,9 @@ func (w *FrameWriter) EnableHeartbeat(interval time.Duration, callback func() *F
 	select {
 	case w.heartbeatControl <- struct{}{}:
 	default:
-		// Channel already has a pending signal, no need to send another
 	}
 }
 
-// DisableHeartbeat disables automatic heartbeat sending.
 func (w *FrameWriter) DisableHeartbeat() {
 	w.mu.Lock()
 	w.heartbeatEnabled = false
@@ -194,6 +197,5 @@ func (w *FrameWriter) DisableHeartbeat() {
 	select {
 	case w.heartbeatControl <- struct{}{}:
 	default:
-		// Channel already has a pending signal, no need to send another
 	}
 }
