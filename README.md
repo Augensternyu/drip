@@ -165,6 +165,7 @@ server {
 
     location / {
         proxy_pass https://127.0.0.1:8443;
+        proxy_ssl_protocols TLSv1.3;
         proxy_ssl_verify off;
         proxy_http_version 1.1;
         proxy_set_header Host $host;
