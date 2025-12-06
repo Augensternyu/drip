@@ -24,139 +24,148 @@ LANG_CODE="${LANG_CODE:-en}"
 # ============================================================================
 # Internationalization
 # ============================================================================
-declare -A MSG_EN
-declare -A MSG_ZH
+msg_en() {
+    case "$1" in
+        banner_title) echo "Drip Client - One-Click Installer" ;;
+        select_lang) echo "Select language / 选择语言" ;;
+        lang_en) echo "English" ;;
+        lang_zh) echo "中文" ;;
+        checking_os) echo "Checking operating system..." ;;
+        detected_os) echo "Detected OS" ;;
+        unsupported_os) echo "Unsupported operating system" ;;
+        checking_arch) echo "Checking system architecture..." ;;
+        detected_arch) echo "Detected architecture" ;;
+        unsupported_arch) echo "Unsupported architecture" ;;
+        checking_deps) echo "Checking dependencies..." ;;
+        deps_ok) echo "Dependencies check passed" ;;
+        downloading) echo "Downloading Drip client" ;;
+        download_failed) echo "Download failed" ;;
+        download_ok) echo "Download completed" ;;
+        select_install_dir) echo "Select installation directory" ;;
+        option_user) echo "User directory (no sudo required)" ;;
+        option_system) echo "System directory (requires sudo)" ;;
+        option_current) echo "Current directory" ;;
+        option_custom) echo "Custom path" ;;
+        enter_custom_path) echo "Enter custom path" ;;
+        installing) echo "Installing binary..." ;;
+        install_ok) echo "Installation completed" ;;
+        updating_path) echo "Updating PATH..." ;;
+        path_updated) echo "PATH updated" ;;
+        path_note) echo "Please restart your terminal or run: source ~/.bashrc" ;;
+        config_title) echo "Client Configuration" ;;
+        configure_now) echo "Configure client now?" ;;
+        enter_server) echo "Enter server address (e.g., tunnel.example.com:8443)" ;;
+        server_required) echo "Server address is required" ;;
+        enter_token) echo "Enter authentication token" ;;
+        token_required) echo "Token is required" ;;
+        skip_verify) echo "Skip TLS certificate verification? (for self-signed certs)" ;;
+        config_saved) echo "Configuration saved" ;;
+        install_complete) echo "Installation completed!" ;;
+        usage_title) echo "Usage" ;;
+        usage_http) echo "Expose HTTP service on port 3000" ;;
+        usage_tcp) echo "Expose TCP service on port 5432" ;;
+        usage_config) echo "Show/modify configuration" ;;
+        usage_daemon) echo "Run as background daemon" ;;
+        run_test) echo "Test connection now?" ;;
+        test_running) echo "Testing connection..." ;;
+        test_success) echo "Connection successful" ;;
+        test_failed) echo "Connection failed" ;;
+        yes) echo "y" ;;
+        no) echo "n" ;;
+        press_enter) echo "Press Enter to continue..." ;;
+        windows_note) echo "For Windows, please download the .exe file from GitHub Releases" ;;
+        already_installed) echo "Drip is already installed" ;;
+        current_version) echo "Current version" ;;
+        update_now) echo "Update to the latest version?" ;;
+        updating) echo "Updating..." ;;
+        update_ok) echo "Update completed" ;;
+        verify_install) echo "Verifying installation..." ;;
+        verify_ok) echo "Verification passed" ;;
+        verify_failed) echo "Verification failed" ;;
+        insecure_note) echo "Only use --insecure for development/testing" ;;
+        *) echo "$1" ;;
+    esac
+}
 
-# English messages
-MSG_EN=(
-    ["banner_title"]="Drip Client - One-Click Installer"
-    ["select_lang"]="Select language / 选择语言"
-    ["lang_en"]="English"
-    ["lang_zh"]="中文"
-    ["checking_os"]="Checking operating system..."
-    ["detected_os"]="Detected OS"
-    ["unsupported_os"]="Unsupported operating system"
-    ["checking_arch"]="Checking system architecture..."
-    ["detected_arch"]="Detected architecture"
-    ["unsupported_arch"]="Unsupported architecture"
-    ["checking_deps"]="Checking dependencies..."
-    ["deps_ok"]="Dependencies check passed"
-    ["downloading"]="Downloading Drip client"
-    ["download_failed"]="Download failed"
-    ["download_ok"]="Download completed"
-    ["select_install_dir"]="Select installation directory"
-    ["option_user"]="User directory (no sudo required)"
-    ["option_system"]="System directory (requires sudo)"
-    ["option_current"]="Current directory"
-    ["option_custom"]="Custom path"
-    ["enter_custom_path"]="Enter custom path"
-    ["installing"]="Installing binary..."
-    ["install_ok"]="Installation completed"
-    ["updating_path"]="Updating PATH..."
-    ["path_updated"]="PATH updated"
-    ["path_note"]="Please restart your terminal or run: source ~/.bashrc"
-    ["config_title"]="Client Configuration"
-    ["configure_now"]="Configure client now?"
-    ["enter_server"]="Enter server address (e.g., tunnel.example.com:8443)"
-    ["server_required"]="Server address is required"
-    ["enter_token"]="Enter authentication token"
-    ["token_required"]="Token is required"
-    ["skip_verify"]="Skip TLS certificate verification? (for self-signed certs)"
-    ["config_saved"]="Configuration saved"
-    ["install_complete"]="Installation completed!"
-    ["usage_title"]="Usage"
-    ["usage_http"]="Expose HTTP service on port 3000"
-    ["usage_tcp"]="Expose TCP service on port 5432"
-    ["usage_config"]="Show/modify configuration"
-    ["usage_daemon"]="Run as background daemon"
-    ["run_test"]="Test connection now?"
-    ["test_running"]="Testing connection..."
-    ["test_success"]="Connection successful"
-    ["test_failed"]="Connection failed"
-    ["yes"]="y"
-    ["no"]="n"
-    ["press_enter"]="Press Enter to continue..."
-    ["windows_note"]="For Windows, please download the .exe file from GitHub Releases"
-    ["already_installed"]="Drip is already installed"
-    ["current_version"]="Current version"
-    ["update_now"]="Update to the latest version?"
-    ["updating"]="Updating..."
-    ["update_ok"]="Update completed"
-    ["verify_install"]="Verifying installation..."
-    ["verify_ok"]="Verification passed"
-    ["verify_failed"]="Verification failed"
-    ["insecure_note"]="Only use --insecure for development/testing"
-)
+msg_zh() {
+    case "$1" in
+        banner_title) echo "Drip 客户端 - 一键安装脚本" ;;
+        select_lang) echo "Select language / 选择语言" ;;
+        lang_en) echo "English" ;;
+        lang_zh) echo "中文" ;;
+        checking_os) echo "检查操作系统..." ;;
+        detected_os) echo "检测到操作系统" ;;
+        unsupported_os) echo "不支持的操作系统" ;;
+        checking_arch) echo "检查系统架构..." ;;
+        detected_arch) echo "检测到架构" ;;
+        unsupported_arch) echo "不支持的架构" ;;
+        checking_deps) echo "检查依赖..." ;;
+        deps_ok) echo "依赖检查通过" ;;
+        downloading) echo "下载 Drip 客户端" ;;
+        download_failed) echo "下载失败" ;;
+        download_ok) echo "下载完成" ;;
+        select_install_dir) echo "选择安装目录" ;;
+        option_user) echo "用户目录（无需 sudo）" ;;
+        option_system) echo "系统目录（需要 sudo）" ;;
+        option_current) echo "当前目录" ;;
+        option_custom) echo "自定义路径" ;;
+        enter_custom_path) echo "输入自定义路径" ;;
+        installing) echo "安装二进制文件..." ;;
+        install_ok) echo "安装完成" ;;
+        updating_path) echo "更新 PATH..." ;;
+        path_updated) echo "PATH 已更新" ;;
+        path_note) echo "请重启终端或运行: source ~/.bashrc" ;;
+        config_title) echo "客户端配置" ;;
+        configure_now) echo "现在配置客户端？" ;;
+        enter_server) echo "输入服务器地址（例如：tunnel.example.com:8443）" ;;
+        server_required) echo "服务器地址是必填项" ;;
+        enter_token) echo "输入认证令牌" ;;
+        token_required) echo "认证令牌是必填项" ;;
+        skip_verify) echo "跳过 TLS 证书验证？（用于自签名证书）" ;;
+        config_saved) echo "配置已保存" ;;
+        install_complete) echo "安装完成！" ;;
+        usage_title) echo "使用方法" ;;
+        usage_http) echo "暴露本地 3000 端口的 HTTP 服务" ;;
+        usage_tcp) echo "暴露本地 5432 端口的 TCP 服务" ;;
+        usage_config) echo "显示/修改配置" ;;
+        usage_daemon) echo "作为后台守护进程运行" ;;
+        run_test) echo "现在测试连接？" ;;
+        test_running) echo "正在测试连接..." ;;
+        test_success) echo "连接成功" ;;
+        test_failed) echo "连接失败" ;;
+        yes) echo "y" ;;
+        no) echo "n" ;;
+        press_enter) echo "按 Enter 继续..." ;;
+        windows_note) echo "Windows 用户请从 GitHub Releases 下载 .exe 文件" ;;
+        already_installed) echo "Drip 已安装" ;;
+        current_version) echo "当前版本" ;;
+        update_now) echo "是否更新到最新版本？" ;;
+        updating) echo "正在更新..." ;;
+        update_ok) echo "更新完成" ;;
+        verify_install) echo "验证安装..." ;;
+        verify_ok) echo "验证通过" ;;
+        verify_failed) echo "验证失败" ;;
+        insecure_note) echo "--insecure 仅用于开发/测试环境" ;;
+        *) echo "$1" ;;
+    esac
+}
 
-# Chinese messages
-MSG_ZH=(
-    ["banner_title"]="Drip 客户端 - 一键安装脚本"
-    ["select_lang"]="Select language / 选择语言"
-    ["lang_en"]="English"
-    ["lang_zh"]="中文"
-    ["checking_os"]="检查操作系统..."
-    ["detected_os"]="检测到操作系统"
-    ["unsupported_os"]="不支持的操作系统"
-    ["checking_arch"]="检查系统架构..."
-    ["detected_arch"]="检测到架构"
-    ["unsupported_arch"]="不支持的架构"
-    ["checking_deps"]="检查依赖..."
-    ["deps_ok"]="依赖检查通过"
-    ["downloading"]="下载 Drip 客户端"
-    ["download_failed"]="下载失败"
-    ["download_ok"]="下载完成"
-    ["select_install_dir"]="选择安装目录"
-    ["option_user"]="用户目录（无需 sudo）"
-    ["option_system"]="系统目录（需要 sudo）"
-    ["option_current"]="当前目录"
-    ["option_custom"]="自定义路径"
-    ["enter_custom_path"]="输入自定义路径"
-    ["installing"]="安装二进制文件..."
-    ["install_ok"]="安装完成"
-    ["updating_path"]="更新 PATH..."
-    ["path_updated"]="PATH 已更新"
-    ["path_note"]="请重启终端或运行: source ~/.bashrc"
-    ["config_title"]="客户端配置"
-    ["configure_now"]="现在配置客户端？"
-    ["enter_server"]="输入服务器地址（例如：tunnel.example.com:8443）"
-    ["server_required"]="服务器地址是必填项"
-    ["enter_token"]="输入认证令牌"
-    ["token_required"]="认证令牌是必填项"
-    ["skip_verify"]="跳过 TLS 证书验证？（用于自签名证书）"
-    ["config_saved"]="配置已保存"
-    ["install_complete"]="安装完成！"
-    ["usage_title"]="使用方法"
-    ["usage_http"]="暴露本地 3000 端口的 HTTP 服务"
-    ["usage_tcp"]="暴露本地 5432 端口的 TCP 服务"
-    ["usage_config"]="显示/修改配置"
-    ["usage_daemon"]="作为后台守护进程运行"
-    ["run_test"]="现在测试连接？"
-    ["test_running"]="正在测试连接..."
-    ["test_success"]="连接成功"
-    ["test_failed"]="连接失败"
-    ["yes"]="y"
-    ["no"]="n"
-    ["press_enter"]="按 Enter 继续..."
-    ["windows_note"]="Windows 用户请从 GitHub Releases 下载 .exe 文件"
-    ["already_installed"]="Drip 已安装"
-    ["current_version"]="当前版本"
-    ["update_now"]="是否更新到最新版本？"
-    ["updating"]="正在更新..."
-    ["update_ok"]="更新完成"
-    ["verify_install"]="验证安装..."
-    ["verify_ok"]="验证通过"
-    ["verify_failed"]="验证失败"
-    ["insecure_note"]="--insecure 仅用于开发/测试环境"
-)
-
-# Get message by key
+# Get message by key (bash 3.2 compatible)
 msg() {
     local key="$1"
     if [[ "$LANG_CODE" == "zh" ]]; then
-        echo "${MSG_ZH[$key]:-$key}"
+        msg_zh "$key"
     else
-        echo "${MSG_EN[$key]:-$key}"
+        msg_en "$key"
     fi
+}
+
+# Prompt helper compatible with bash 3.2 and zsh
+prompt_input() {
+    local __prompt="$1"
+    local __var_name="$2"
+    printf "%s" "$__prompt"
+    IFS= read -r "$__var_name" < /dev/tty
 }
 
 # ============================================================================
@@ -218,7 +227,7 @@ select_language() {
     echo -e "${CYAN}╚════════════════════════════════════════╝${NC}"
     echo ""
 
-    read -p "Select [1]: " lang_choice < /dev/tty
+    prompt_input "Select [1]: " lang_choice
     case "$lang_choice" in
         2)
             LANG_CODE="zh"
@@ -331,7 +340,7 @@ check_existing_install() {
         else
             print_info "Latest version: $latest_version"
             echo ""
-            read -p "$(msg update_now) [Y/n]: " update_choice < /dev/tty
+            prompt_input "$(msg update_now) [Y/n]: " update_choice
         fi
 
         if [[ "$update_choice" =~ ^[Nn]$ ]]; then
@@ -408,7 +417,7 @@ select_install_dir() {
     echo -e "${CYAN}╚════════════════════════════════════════╝${NC}"
     echo ""
 
-    read -p "Select [1]: " dir_choice < /dev/tty
+    prompt_input "Select [1]: " dir_choice
 
     case "$dir_choice" in
         2)
@@ -419,7 +428,7 @@ select_install_dir() {
             INSTALL_DIR="."
             ;;
         4)
-            read -p "$(msg enter_custom_path): " INSTALL_DIR < /dev/tty
+            prompt_input "$(msg enter_custom_path): " INSTALL_DIR
             ;;
         *)
             INSTALL_DIR="$HOME/.local/bin"
@@ -521,7 +530,7 @@ verify_installation() {
 # ============================================================================
 configure_client() {
     echo ""
-    read -p "$(msg configure_now) [Y/n]: " config_choice < /dev/tty
+    prompt_input "$(msg configure_now) [Y/n]: " config_choice
 
     if [[ "$config_choice" =~ ^[Nn]$ ]]; then
         return
@@ -537,7 +546,7 @@ configure_client() {
 
     # Server address
     while true; do
-        read -p "$(msg enter_server): " SERVER < /dev/tty
+        prompt_input "$(msg enter_server): " SERVER
         if [[ -n "$SERVER" ]]; then
             break
         fi
@@ -546,7 +555,7 @@ configure_client() {
 
     # Token
     while true; do
-        read -p "$(msg enter_token): " TOKEN < /dev/tty
+        prompt_input "$(msg enter_token): " TOKEN
         if [[ -n "$TOKEN" ]]; then
             break
         fi
@@ -554,7 +563,7 @@ configure_client() {
     done
 
     # Insecure mode
-    read -p "$(msg skip_verify) [y/N]: " insecure_choice < /dev/tty
+    prompt_input "$(msg skip_verify) [y/N]: " insecure_choice
     INSECURE=""
     if [[ "$insecure_choice" =~ ^[Yy]$ ]]; then
         INSECURE="--insecure"
@@ -572,7 +581,7 @@ configure_client() {
 # ============================================================================
 test_connection() {
     echo ""
-    read -p "$(msg run_test) [y/N]: " test_choice < /dev/tty
+    prompt_input "$(msg run_test) [y/N]: " test_choice
 
     if [[ ! "$test_choice" =~ ^[Yy]$ ]]; then
         return
